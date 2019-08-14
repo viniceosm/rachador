@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Rachador</title>
+
+	<link rel="stylesheet" href="fegom.css">
+	<style>
+	#res {
+		margin-top: 5px;
+		border: 1px solid black;
+	}
+	button {
+		background: purple;
+		border: 1px solid purple;
+		color: white;
+	}
+	#btnRachar{
+		margin-top: 5px;
+	}
+	input.form-el {
+		background: rgb(190, 190, 190);
+	}
+	</style>
+</head>
+<body>
+	
+	<div class="col-2 col-s-7 col-s-offset-2 col-m-offset-2">
+		<div class="col-12">Pagar:<br>
+			<input class="col-12 form-el" type="number" id="txtPagar" value="70">
+		</div>
+		<div class="col-12">Quantidade pessoas:<br>
+			<input class="col-12 form-el" type="number" id="txtQtdePessoa" value="9">
+		</div>
+	
+		<button id="btnRachar">rachar ok</button>
+	
+		<div id="res">
+			
+		</div>
+	</div>
+
+	<script>
+		function rachar () {
+			let pagar = parseFloat(document.getElementById('txtPagar').value);
+			let qtdPessoas = parseInt(document.getElementById('txtQtdePessoa').value);
+			let quo = pagar / qtdPessoas;
+			let quos = Array(qtdPessoas).fill(quo);
+	
+			let totalquos = () => quos.reduce((a, b) => a + b);
+			let indicemaior = () => quos.indexOf(Math.max(...quos));
+	
+			if (countDecimals(quo) > 2) {
+				for (let i in quos) {
+					quos[i] = parseFloat((quos[i]).toFixed(2));
+				}
+	
+				while (totalquos() > pagar) {
+					quos[indicemaior()] = parseFloat((parseFloat(quos[indicemaior()].toFixed(2)) - 0.01).toFixed(2));
+				}
+			}
+
+			let res = 'Cada um paga isso -> ';
+
+			quos.map(function(v, i){
+				res += '<br>' + (i+1) + ') R$ ' + v;
+			});
+	
+			res += '<br><br>' +
+					'Total ae -> ' + totalquos();
+	
+			document.getElementById('res').innerHTML = res;
+	
+			function countDecimals(value) {
+				if (Math.floor(value) !== value)
+					return value.toString().split(".")[1].length || 0;
+				return 0;
+			}
+		}
+
+		document.getElementById('btnRachar').addEventListener('click', rachar);
+	</script>
+</body>
+</html>
