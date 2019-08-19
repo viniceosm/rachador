@@ -17,22 +17,40 @@ function rachar () {
 		}
 	}
 
-	let res = 'Cada um paga isso -> ';
+	let res = '';
 
-	quos.map(function(v, i){
-		res += '<br>' + (i+1) + ') R$ ' + v;
-	});
+	for(let r of verRepeticao(quos)) {
+		res += '<br>' + pluralString((r.q + 1) + ' pessoa tem que pagar R$ ') + r.valorVerificar;
+	}
 
-	res += '<br><br>' +
-			'Total ae -> ' + totalquos();
+	res = res.substring(4, res.length);
 
 	document.getElementById('res').innerHTML = res;
-
-	function countDecimals(value) {
-		if (Math.floor(value) !== value)
-			return value.toString().split(".")[1].length || 0;
-		return 0;
-	}
 }
 
 document.getElementById('btnRachar').addEventListener('click', rachar);
+
+function countDecimals(value) {
+	if (Math.floor(value) !== value)
+		return value.toString().split(".")[1].length || 0;
+	return 0;
+}
+
+function verRepeticao(arr) {
+	var valorRepeticaoIndex = [];
+	var valorRepeticao = [];
+
+	arr.forEach(valorVerificar => {
+		var i = valorRepeticaoIndex.findIndex(v => v == valorVerificar);
+
+		if (i == -1) {
+			valorRepeticaoIndex.push(valorVerificar);
+			i = valorRepeticaoIndex.length - 1;
+		}
+
+		var q = ((valorRepeticao[i] != undefined) ? (valorRepeticao[i].q + 1) : 0);
+		valorRepeticao[i] = { valorVerificar, q };
+	});
+
+	return valorRepeticao;
+}
