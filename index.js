@@ -17,10 +17,14 @@ function rachar () {
 		}
 	}
 
+	montaResHtml(quos);
+}
+
+function montaResHtml(quos) {
 	let res = '';
 
-	for(let r of verRepeticao(quos)) {
-		res += '<br>' + pluralString((r.q + 1) + ' pessoa tem que pagar R$ ') + r.valorVerificar;
+	for (let r of verRepeticao(quos)) {
+		res += `<br> ${pluralString((r.q + 1) + ' pessoa tem que pagar R$ ')} ${r.valorVerificar}`;
 	}
 
 	res = res.substring(4, res.length);
