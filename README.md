@@ -1,5 +1,8 @@
 # rachador
-racha/divide a conta. top pros role ok
+
+racha/divide a conta. top pros role ok.
+
+[live site](https://viniceosm.github.io/rachador/)
 
 ## motivo disso
 
